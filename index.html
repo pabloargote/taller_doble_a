@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Taller DobleA â DiseÃ±o y AnÃ¡lisis de Encuestas para InvestigaciÃ³n Aplicada</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --pink: #FF00CC;
+      --blue: #4422EE;
+      --gradient: linear-gradient(90deg, #FF00CC, #4422EE);
+      --dark: #0D0D1A;
+      --dark2: #12102a;
+      --text: #1C1C2E;
+      --muted: #6B7280;
+      --light: #F7F8FC;
+      --white: #FFFFFF;
+      --radius: 14px;
+      --shadow: 0 4px 28px rgba(0,0,0,0.08);
+      --shadow-lg: 0 12px 40px rgba(0,0,0,0.14);
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      color: var(--text);
+      background: var(--white);
+      line-height: 1.7;
+    }
+
+    /* ========== NAVBAR ========== */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(0,0,0,0.07);
+      padding: 0 6%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 74px;
+    }
+
+    .logo-wrap { text-decoration: none; display: flex; flex-direction: column; line-height: 1; }
+    .logo-main { display: flex; align-items: baseline; }
+    .logo-doble {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 1.65rem;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .logo-aa {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 900;
+      font-size: 1.65rem;
+      color: #111;
+      letter-spacing: -3px;
+      margin-left: 1px;
+    }
+    .logo-sub {
+      font-size: 0.56rem;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      margin-top: 3px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+      align-items: center;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text);
+      font-size: 0.88rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--pink); }
+    .nav-links .nav-cta {
+      background: var(--gradient);
+      color: white !important;
+      padding: 0.55rem 1.5rem;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 0.86rem;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .nav-links .nav-cta:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(255,0,200,0.3);
+    }
+
+    /* ========== HERO ========== */
+    .hero {
+      min-height: 100vh;
+      background: var(--dark);
+      display: flex;
+      align-items: center;
+      padding: 130px 6% 90px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-glow-pink {
+      position: absolute; top: -10%; right: 5%;
+      width: 55%; height: 75%;
+      background: radial-gradient(ellipse at center, rgba(255,0,200,0.15) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .hero-glow-blue {
+      position: absolute; bottom: -15%; left: -5%;
+      width: 50%; height: 65%;
+      background: radial-gradient(ellipse at center, rgba(68,34,238,0.2) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .hero-inner {
+      max-width: 1060px;
+      margin: 0 auto;
+      width: 100%;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.14);
+      color: rgba(255,255,255,0.75);
+      padding: 0.4rem 1.1rem;
+      border-radius: 50px;
+      font-size: 0.82rem;
+      letter-spacing: 0.03em;
+      margin-bottom: 2rem;
+      font-weight: 500;
+    }
+    .hero h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 900;
+      font-size: clamp(2.6rem, 5.5vw, 4.2rem);
+      color: white;
+      line-height: 1.12;
+      margin-bottom: 1.6rem;
+    }
+    .g-text {
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-sub {
+      font-size: 1.12rem;
+      color: rgba(255,255,255,0.65);
+      max-width: 580px;
+      margin-bottom: 2.8rem;
+      line-height: 1.85;
+    }
+    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: var(--gradient);
+      color: white;
+      padding: 0.9rem 2.3rem;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+      border: none;
+      cursor: pointer;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 35px rgba(255,0,200,0.4);
+    }
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      border: 1px solid rgba(255,255,255,0.28);
+      color: rgba(255,255,255,0.85);
+      padding: 0.9rem 2.3rem;
+      border-radius: 50px;
+      font-weight: 500;
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .btn-ghost:hover { background: rgba(255,255,255,0.07); }
+
+    .hero-stats {
+      display: flex;
+      gap: 3.5rem;
+      margin-top: 4.5rem;
+      padding-top: 3rem;
+      border-top: 1px solid rgba(255,255,255,0.09);
+    }
+    .hero-stat .num {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2.4rem;
+      font-weight: 900;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+    }
+    .hero-stat .lbl {
+      color: rgba(255,255,255,0.48);
+      font-size: 0.78rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-top: 0.4rem;
+    }
+
+    /* ========== SECTIONS BASE ========== */
+    section { padding: 96px 6%; }
+    .sec-inner { max-width: 1060px; margin: 0 auto; }
+
+    .sec-tag {
+      display: inline-block;
+      font-size: 0.76rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.7rem;
+    }
+    h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: clamp(1.9rem, 3.2vw, 2.7rem);
+      color: var(--text);
+      margin-bottom: 1rem;
+      line-height: 1.22;
+    }
+    .sec-lead {
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 640px;
+      margin-bottom: 3rem;
+      line-height: 1.85;
+    }
+
+    /* ========== QUIÃNES SOMOS ========== */
+    #quienes { background: var(--white); }
+    .quienes-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+    .quienes-text p {
+      color: var(--muted);
+      margin-bottom: 1.1rem;
+      line-height: 1.85;
+      font-size: 0.97rem;
+    }
+    .feature-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 2.2rem;
+    }
+    .feat-card {
+      background: var(--light);
+      border-radius: 10px;
+      padding: 1.2rem 1.3rem;
+      border-left: 3px solid transparent;
+      position: relative;
+    }
+    .feat-card::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 3px;
+      background: var(--gradient);
+      border-radius: 3px 0 0 3px;
+    }
+    .feat-card h4 { font-size: 0.88rem; font-weight: 700; margin-bottom: 0.3rem; }
+    .feat-card p { font-size: 0.8rem; color: var(--muted); margin: 0; line-height: 1.6; }
+
+    /* ========== AUDIENCIA ========== */
+    #audiencia { background: var(--light); }
+    .audience-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.2rem;
+    }
+    .aud-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      border: 1px solid rgba(0,0,0,0.06);
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      transition: transform 0.2s;
+    }
+    .aud-card:hover { transform: translateY(-3px); }
+    .aud-icon {
+      width: 42px; height: 42px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, rgba(255,0,200,0.12), rgba(68,34,238,0.12));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      flex-shrink: 0;
+    }
+    .aud-card h4 { font-size: 0.88rem; font-weight: 700; margin-bottom: 0.25rem; }
+    .aud-card p { font-size: 0.8rem; color: var(--muted); margin: 0; line-height: 1.6; }
+
+    /* ========== TALLER ========== */
+    #taller { background: var(--dark); }
+    #taller h2 { color: white; }
+    #taller .sec-lead { color: rgba(255,255,255,0.55); }
+
+    .modules-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .module-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: var(--radius);
+      padding: 2rem;
+      transition: transform 0.2s, background 0.2s;
+    }
+    .module-card:hover {
+      transform: translateY(-5px);
+      background: rgba(255,255,255,0.08);
+    }
+    .mod-num {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 3.2rem;
+      font-weight: 900;
+      line-height: 1;
+      margin-bottom: 1rem;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .module-card h3 {
+      font-size: 1.02rem;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 0.6rem;
+      line-height: 1.35;
+    }
+    .mod-date {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.76rem;
+      color: rgba(255,255,255,0.48);
+      background: rgba(255,255,255,0.06);
+      padding: 0.3rem 0.85rem;
+      border-radius: 50px;
+      margin-bottom: 1.2rem;
+    }
+    .module-card .mod-desc {
+      font-size: 0.84rem;
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 1.3rem;
+      line-height: 1.75;
+    }
+    .mod-topics { list-style: none; }
+    .mod-topics li {
+      font-size: 0.81rem;
+      color: rgba(255,255,255,0.5);
+      padding: 0.35rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      display: flex;
+      align-items: flex-start;
+      gap: 0.55rem;
+      line-height: 1.5;
+    }
+    .mod-topics li:last-child { border-bottom: none; }
+    .mod-topics li::before {
+      content: 'â';
+      color: var(--pink);
+      font-size: 0.72rem;
+      flex-shrink: 0;
+      margin-top: 0.15rem;
+    }
+
+    /* ========== PRODUCTOS ========== */
+    #productos { background: var(--light); }
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .prod-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 2rem;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(0,0,0,0.05);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .prod-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+    .prod-card h3 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 800;
+      margin-bottom: 0.6rem;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .prod-card > p {
+      font-size: 0.84rem;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+      line-height: 1.7;
+    }
+    .prod-items { display: flex; flex-direction: column; gap: 0.5rem; }
+    .prod-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.6rem 0.9rem;
+      background: var(--light);
+      border-radius: 8px;
+      font-size: 0.86rem;
+      font-weight: 500;
+      color: var(--text);
+    }
+    .prod-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--gradient);
+      flex-shrink: 0;
+    }
+
+    /* ========== EQUIPO ========== */
+    #equipo { background: var(--white); }
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+    .team-card {
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid rgba(0,0,0,0.07);
+      box-shadow: var(--shadow);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .team-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+    }
+    .team-avatar {
+      height: 180px;
+      background: linear-gradient(135deg, rgba(255,0,200,0.1), rgba(68,34,238,0.15));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .team-initials {
+      width: 76px; height: 76px;
+      border-radius: 50%;
+      background: var(--gradient);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.7rem;
+      font-weight: 900;
+      color: white;
+    }
+    .team-info { padding: 1.6rem; }
+    .team-info h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.3rem; }
+    .team-role {
+      font-size: 0.78rem;
+      font-weight: 700;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.9rem;
+      display: block;
+    }
+    .team-info p { font-size: 0.82rem; color: var(--muted); line-height: 1.75; }
+
+    /* ========== INFO / INSCRIPCIÃN ========== */
+    #info {
+      background: linear-gradient(150deg, #0D0D1A 0%, #16092e 100%);
+    }
+    #info h2 { color: white; }
+    #info .sec-lead { color: rgba(255,255,255,0.55); }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.8rem;
+    }
+    .info-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: var(--radius);
+      padding: 2rem;
+    }
+    .info-card h3 {
+      color: white;
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 1.4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+    .info-card h3 .bar {
+      display: inline-block;
+      width: 22px; height: 3px;
+      background: var(--gradient);
+      border-radius: 2px;
+    }
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 0.65rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .info-row:last-of-type { border-bottom: none; }
+    .info-key { font-size: 0.8rem; color: rgba(255,255,255,0.45); font-weight: 500; flex-shrink: 0; }
+    .info-val { font-size: 0.86rem; color: white; font-weight: 600; text-align: right; }
+    .info-val a { color: rgba(255,255,255,0.75); text-decoration: none; }
+    .info-val a:hover { color: var(--pink); }
+
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 1.8rem;
+      background: var(--gradient);
+      color: white;
+      padding: 0.8rem 2rem;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(255,0,200,0.35);
+    }
+
+    /* ========== FOOTER ========== */
+    footer {
+      background: #07070f;
+      padding: 3rem 6%;
+      text-align: center;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+    .footer-logo {
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+    .footer-logo .fd {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 1.25rem;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .footer-logo .fa {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 900;
+      font-size: 1.25rem;
+      color: rgba(255,255,255,0.6);
+      letter-spacing: -2px;
+    }
+    footer p { font-size: 0.8rem; color: rgba(255,255,255,0.3); line-height: 1.8; }
+    footer a { color: rgba(255,255,255,0.45); text-decoration: none; }
+    footer a:hover { color: var(--pink); }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 1024px) {
+      .modules-grid,
+      .products-grid,
+      .team-grid { grid-template-columns: 1fr 1fr; }
+      .quienes-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .audience-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 700px) {
+      .modules-grid,
+      .products-grid,
+      .team-grid,
+      .info-grid,
+      .audience-grid,
+      .feature-grid { grid-template-columns: 1fr; }
+      .hero-stats { flex-direction: column; gap: 1.8rem; }
+      nav { padding: 0 4%; }
+      .nav-links li:not(:last-child) { display: none; }
+      section { padding: 72px 5%; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== NAVBAR ===== -->
+  <nav>
+    <a href="#inicio" class="logo-wrap">
+      <div class="logo-main">
+        <span class="logo-doble">doble</span><span class="logo-aa">AA</span>
+      </div>
+      <span class="logo-sub">Estudios &amp; Estrategia</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#quienes">QuiÃ©nes somos</a></li>
+      <li><a href="#taller">El Taller</a></li>
+      <li><a href="#productos">Servicios</a></li>
+      <li><a href="#equipo">El Equipo</a></li>
+      <li><a href="#info" class="nav-cta">InscrÃ­bete</a></li>
+    </ul>
+  </nav>
+
+  <!-- ===== HERO ===== -->
+  <section id="inicio" class="hero">
+    <div class="hero-glow-pink"></div>
+    <div class="hero-glow-blue"></div>
+    <div class="hero-inner">
+      <div class="hero-pill">
+        ð¬ Taller de InvestigaciÃ³n Aplicada Â· Mayo 2025
+      </div>
+      <h1>
+        DiseÃ±a y analiza<br>
+        <span class="g-text">encuestas con rigor.</span>
+      </h1>
+      <p class="hero-sub">
+        FormaciÃ³n prÃ¡ctica en investigaciÃ³n aplicada â desde el diseÃ±o del cuestionario hasta el reporte final automatizado con IA. Para profesionales y equipos que trabajan con datos.
+      </p>
+      <div class="hero-btns">
+        <a href="#taller" class="btn-primary">Ver el programa â</a>
+        <a href="#info" class="btn-ghost">InformaciÃ³n e inscripciÃ³n</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="num">3</div>
+          <div class="lbl">MÃ³dulos</div>
+        </div>
+        <div class="hero-stat">
+          <div class="num">6</div>
+          <div class="lbl">Jornadas</div>
+        </div>
+        <div class="hero-stat">
+          <div class="num">18h</div>
+          <div class="lbl">De formaciÃ³n</div>
+        </div>
+        <div class="hero-stat">
+          <div class="num">$250K</div>
+          <div class="lbl">CLP por persona</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== QUIÃNES SOMOS ===== -->
+  <section id="quienes">
+    <div class="sec-inner">
+      <span class="sec-tag">QuiÃ©nes somos</span>
+      <h2>DobleA Estudios &amp; Estrategia</h2>
+      <div class="quienes-grid">
+        <div class="quienes-text">
+          <p>Somos profesionales con formaciÃ³n en ciencia polÃ­tica, sociologÃ­a y polÃ­ticas pÃºblicas, especializados en el diseÃ±o y anÃ¡lisis de encuestas para investigaciÃ³n aplicada.</p>
+          <p>Reunimos experiencia del mundo acadÃ©mico y de los estudios de mercado y opiniÃ³n pÃºblica para compartir herramientas metodolÃ³gicas rigurosas y Ãºtiles en la prÃ¡ctica profesional.</p>
+          <p>Nuestra propuesta conecta la investigaciÃ³n acadÃ©mica con la prÃ¡ctica real â enseÃ±amos de forma eficiente y rigurosa todo el proceso de investigaciÃ³n: desde la demanda vaga de un cliente hasta el reporte final automatizado con IA.</p>
+          <div class="feature-grid">
+            <div class="feat-card">
+              <h4>MetodologÃ­a rigurosa</h4>
+              <p>EstÃ¡ndares acadÃ©micos aplicados a contextos reales de investigaciÃ³n.</p>
+            </div>
+            <div class="feat-card">
+              <h4>Casos reales</h4>
+              <p>Ejercicios basados en estudios de mercado y opiniÃ³n pÃºblica.</p>
+            </div>
+            <div class="feat-card">
+              <h4>IA integrada</h4>
+              <p>Incorporamos IA en diseÃ±o, anÃ¡lisis y automatizaciÃ³n de reportes.</p>
+            </div>
+            <div class="feat-card">
+              <h4>End-to-end</h4>
+              <p>Del brief del cliente al reporte final, cubrimos todo el proceso.</p>
+            </div>
+          </div>
+        </div>
+        <div>
+          <!-- Decorative card -->
+          <div style="background: linear-gradient(135deg, #0D0D1A, #16092e); border-radius: 20px; padding: 2.5rem; color: white; position: relative; overflow: hidden;">
+            <div style="position:absolute; top:-30px; right:-30px; width:160px; height:160px; background: radial-gradient(circle, rgba(255,0,200,0.2), transparent 70%); pointer-events:none;"></div>
+            <div style="position:absolute; bottom:-40px; left:-20px; width:180px; height:180px; background: radial-gradient(circle, rgba(68,34,238,0.2), transparent 70%); pointer-events:none;"></div>
+            <div style="position:relative; z-index:1;">
+              <p style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.15em; color:rgba(255,255,255,0.45); margin-bottom:1.2rem; font-weight:700;">Â¿QuÃ© aprenderÃ¡s?</p>
+              <div style="display:flex; flex-direction:column; gap:1rem;">
+                <div style="display:flex; gap:0.8rem; align-items:flex-start;">
+                  <span style="background:var(--gradient); color:white; font-size:0.7rem; font-weight:800; padding:0.2rem 0.5rem; border-radius:4px; flex-shrink:0; margin-top:0.1rem;">01</span>
+                  <p style="font-size:0.87rem; color:rgba(255,255,255,0.75); margin:0; line-height:1.6;">DiseÃ±ar encuestas con claridad conceptual y objetivos de investigaciÃ³n sÃ³lidos.</p>
+                </div>
+                <div style="display:flex; gap:0.8rem; align-items:flex-start;">
+                  <span style="background:var(--gradient); color:white; font-size:0.7rem; font-weight:800; padding:0.2rem 0.5rem; border-radius:4px; flex-shrink:0; margin-top:0.1rem;">02</span>
+                  <p style="font-size:0.87rem; color:rgba(255,255,255,0.75); margin:0; line-height:1.6;">Detectar errores de diseÃ±o y sesgos como la deseabilidad social.</p>
+                </div>
+                <div style="display:flex; gap:0.8rem; align-items:flex-start;">
+                  <span style="background:var(--gradient); color:white; font-size:0.7rem; font-weight:800; padding:0.2rem 0.5rem; border-radius:4px; flex-shrink:0; margin-top:0.1rem;">03</span>
+                  <p style="font-size:0.87rem; color:rgba(255,255,255,0.75); margin:0; line-height:1.6;">Evaluar representatividad, calidad de datos e interpretar resultados con rigor.</p>
+                </div>
+                <div style="display:flex; gap:0.8rem; align-items:flex-start;">
+                  <span style="background:var(--gradient); color:white; font-size:0.7rem; font-weight:800; padding:0.2rem 0.5rem; border-radius:4px; flex-shrink:0; margin-top:0.1rem;">04</span>
+                  <p style="font-size:0.87rem; color:rgba(255,255,255,0.75); margin:0; line-height:1.6;">Usar IA para optimizar el diseÃ±o, el anÃ¡lisis y los procesos de investigaciÃ³n.</p>
+                </div>
+                <div style="display:flex; gap:0.8rem; align-items:flex-start;">
+                  <span style="background:var(--gradient); color:white; font-size:0.7rem; font-weight:800; padding:0.2rem 0.5rem; border-radius:4px; flex-shrink:0; margin-top:0.1rem;">05</span>
+                  <p style="font-size:0.87rem; color:rgba(255,255,255,0.75); margin:0; line-height:1.6;">Aplicar todo en casos prÃ¡cticos basados en estudios reales.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== AUDIENCIA ===== -->
+  <section id="audiencia">
+    <div class="sec-inner">
+      <span class="sec-tag">Audiencia</span>
+      <h2>Â¿A quiÃ©n estÃ¡ dirigido?</h2>
+      <p class="sec-lead">El taller estÃ¡ diseÃ±ado para profesionales que trabajan o quieren trabajar con encuestas en contextos aplicados.</p>
+      <div class="audience-grid">
+        <div class="aud-card">
+          <div class="aud-icon">ð</div>
+          <div>
+            <h4>Analistas en consultoras</h4>
+            <p>Equipos de estudios de mercado y opiniÃ³n pÃºblica.</p>
+          </div>
+        </div>
+        <div class="aud-card">
+          <div class="aud-icon">ð¢</div>
+          <div>
+            <h4>Equipos de Research</h4>
+            <p>Profesionales de investigaciÃ³n en empresas.</p>
+          </div>
+        </div>
+        <div class="aud-card">
+          <div class="aud-icon">ð¬</div>
+          <div>
+            <h4>Investigadores</h4>
+            <p>Que desean actualizar conocimientos tÃ©cnicos y aplicados.</p>
+          </div>
+        </div>
+        <div class="aud-card">
+          <div class="aud-icon">ðï¸</div>
+          <div>
+            <h4>Organismos pÃºblicos</h4>
+            <p>Instituciones que trabajan con encuestas.</p>
+          </div>
+        </div>
+        <div class="aud-card">
+          <div class="aud-icon">ð</div>
+          <div>
+            <h4>Estudiantes universitarios</h4>
+            <p>Interesados en formarse en investigaciÃ³n aplicada. (Descuento disponible)</p>
+          </div>
+        </div>
+        <div class="aud-card">
+          <div class="aud-icon">ð¼</div>
+          <div>
+            <h4>Asistentes de investigaciÃ³n</h4>
+            <p>Que buscan desarrollar mayor autonomÃ­a tÃ©cnica.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TALLER ===== -->
+  <section id="taller">
+    <div class="sec-inner">
+      <span class="sec-tag">El programa</span>
+      <h2>Estructura del Taller</h2>
+      <p class="sec-lead">Tres mÃ³dulos que cubren todo el proceso de investigaciÃ³n aplicada â desde el diseÃ±o del instrumento hasta el anÃ¡lisis riguroso y la automatizaciÃ³n del reporte.</p>
+      <div class="modules-grid">
+
+        <!-- MÃDULO 1 -->
+        <div class="module-card">
+          <div class="mod-num">01</div>
+          <h3>DiseÃ±o de Encuestas y Fundamentos</h3>
+          <span class="mod-date">ð 4 y 5 de mayo Â· 16:00â19:30</span>
+          <p class="mod-desc">DiseÃ±o de encuestas con foco en la definiciÃ³n del problema de investigaciÃ³n, la formulaciÃ³n de preguntas y la estructura del cuestionario. Porque una buena encuesta comienza mucho antes de programarla.</p>
+          <ul class="mod-topics">
+            <li>DefiniciÃ³n de objetivos sustantivos y conceptos medibles</li>
+            <li>CÃ³mo traducir conceptos abstractos en preguntas claras</li>
+            <li>Errores comunes en redacciÃ³n</li>
+            <li>Escalas, orden y estructura del cuestionario</li>
+            <li>Sesgos de mediciÃ³n: deseabilidad social</li>
+            <li>Experimentos de encuesta como herramienta de mediciÃ³n</li>
+          </ul>
+        </div>
+
+        <!-- MÃDULO 2 -->
+        <div class="module-card">
+          <div class="mod-num">02</div>
+          <h3>Herramientas de AnÃ¡lisis y EvaluaciÃ³n de Calidad</h3>
+          <span class="mod-date">ð 11 y 12 de mayo Â· 16:00â19:30</span>
+          <p class="mod-desc">Herramientas para analizar encuestas y evaluar la calidad de los datos en estudios reales, con introducciÃ³n prÃ¡ctica a R.</p>
+          <ul class="mod-topics">
+            <li>Representatividad y diseÃ±o muestral</li>
+            <li>Uso de ponderadores y post-estratificaciÃ³n</li>
+            <li>EvaluaciÃ³n de calidad y detecciÃ³n de problemas frecuentes</li>
+            <li>AnÃ¡lisis de experimentos de encuesta</li>
+            <li>SimulaciÃ³n y evaluaciÃ³n de incertidumbre</li>
+            <li>IntroducciÃ³n prÃ¡ctica a anÃ¡lisis en R</li>
+          </ul>
+        </div>
+
+        <!-- MÃDULO 3 -->
+        <div class="module-card">
+          <div class="mod-num">03</div>
+          <h3>CapacitaciÃ³n TÃ©cnica Aplicada</h3>
+          <span class="mod-date">ð 18 y 19 de mayo Â· 16:00â19:30</span>
+          <p class="mod-desc">ImplementaciÃ³n prÃ¡ctica de herramientas para mayor autonomÃ­a tÃ©cnica en el trabajo con datos â incluyendo IA y automatizaciÃ³n de reportes.</p>
+          <ul class="mod-topics">
+            <li>ConstrucciÃ³n en R de ponderadores por post-estratificaciÃ³n</li>
+            <li>Uso de IA para diseÃ±o y anÃ¡lisis de encuestas</li>
+            <li>AutomatizaciÃ³n bÃ¡sica de reportes</li>
+            <li>Ejercicios aplicados con datos reales</li>
+            <li>Proyectos reproducibles</li>
+            <li>VisualizaciÃ³n de datos</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PRODUCTOS ===== -->
+  <section id="productos">
+    <div class="sec-inner">
+      <span class="sec-tag">Servicios on demand</span>
+      <h2>Productos y Servicios</h2>
+      <p class="sec-lead">MÃ¡s allÃ¡ del taller, ofrecemos servicios especializados para profesionales y empresas que necesitan apoyo tÃ©cnico en sus proyectos de encuestas.</p>
+      <div class="products-grid">
+
+        <div class="prod-card">
+          <h3>Qualtrics</h3>
+          <p>ImplementaciÃ³n y soporte tÃ©cnico avanzado en la plataforma lÃ­der para diseÃ±o de encuestas profesionales.</p>
+          <div class="prod-items">
+            <div class="prod-item"><span class="prod-dot"></span> Programar experimentos</div>
+            <div class="prod-item"><span class="prod-dot"></span> Ponderadores y post-estratificaciÃ³n</div>
+            <div class="prod-item"><span class="prod-dot"></span> Workflow y automatizaciÃ³n</div>
+            <div class="prod-item"><span class="prod-dot"></span> Conjoint experiment</div>
+            <div class="prod-item"><span class="prod-dot"></span> VisualizaciÃ³n de resultados</div>
+          </div>
+        </div>
+
+        <div class="prod-card">
+          <h3>ConsultorÃ­a MetodolÃ³gica</h3>
+          <p>AsesorÃ­a end-to-end en proyectos de investigaciÃ³n aplicada, desde el diseÃ±o hasta el anÃ¡lisis y reporte.</p>
+          <div class="prod-items">
+            <div class="prod-item"><span class="prod-dot"></span> DiseÃ±o de cuestionarios</div>
+            <div class="prod-item"><span class="prod-dot"></span> AnÃ¡lisis estadÃ­stico</div>
+            <div class="prod-item"><span class="prod-dot"></span> Inferencia causal</div>
+            <div class="prod-item"><span class="prod-dot"></span> Reportes automatizados con IA</div>
+            <div class="prod-item"><span class="prod-dot"></span> RevisiÃ³n metodolÃ³gica</div>
+          </div>
+        </div>
+
+        <div class="prod-card">
+          <h3>FormaciÃ³n In-Company</h3>
+          <p>Talleres y capacitaciones a medida para equipos de empresas e instituciones que trabajan con datos.</p>
+          <div class="prod-items">
+            <div class="prod-item"><span class="prod-dot"></span> Talleres personalizados</div>
+            <div class="prod-item"><span class="prod-dot"></span> CapacitaciÃ³n en R</div>
+            <div class="prod-item"><span class="prod-dot"></span> DiseÃ±o experimental</div>
+            <div class="prod-item"><span class="prod-dot"></span> AnÃ¡lisis de opiniÃ³n pÃºblica</div>
+            <div class="prod-item"><span class="prod-dot"></span> Reportes ejecutivos</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== EQUIPO ===== -->
+  <section id="equipo">
+    <div class="sec-inner">
+      <span class="sec-tag">El equipo</span>
+      <h2>Â¿QuiÃ©nes te acompaÃ±arÃ¡n?</h2>
+      <p class="sec-lead">Un equipo con formaciÃ³n en las mejores universidades del mundo y experiencia en el Ã¡mbito acadÃ©mico y en la prÃ¡ctica profesional.</p>
+      <div class="team-grid">
+
+        <div class="team-card">
+          <div class="team-avatar"><div class="team-initials">PA</div></div>
+          <div class="team-info">
+            <h3>Pablo Argote</h3>
+            <span class="team-role">PhD / MPA â Socio Fundador DobleA</span>
+            <p>PhD en Ciencia PolÃ­tica, Universidad de Columbia. Investigador postdoctoral en University of Southern California. Especialista en comportamiento polÃ­tico, diseÃ±o de encuestas, estadÃ­stica aplicada e inferencia causal. Amplia experiencia en el Ã¡mbito acadÃ©mico y en consultorÃ­a.</p>
+          </div>
+        </div>
+
+        <div class="team-card">
+          <div class="team-avatar"><div class="team-initials">MB</div></div>
+          <div class="team-info">
+            <h3>Mauricio Bucca</h3>
+            <span class="team-role">PhD â Profesor UC Chile</span>
+            <p>PhD en SociologÃ­a, Universidad de Cornell. Profesor en la Pontificia Universidad CatÃ³lica de Chile. Experto en movilidad social, modelaciÃ³n Bayesiana, estratificaciÃ³n y diseÃ±o de encuestas. Experiencia en consultorÃ­a, mÃ©todos experimentales y anÃ¡lisis de opiniÃ³n pÃºblica.</p>
+          </div>
+        </div>
+
+        <div class="team-card">
+          <div class="team-avatar"><div class="team-initials">LA</div></div>
+          <div class="team-info">
+            <h3>LucÃ­a Argote</h3>
+            <span class="team-role">SociÃ³loga â Socia Fundadora DobleA</span>
+            <p>SociÃ³loga de la Universidad Diego Portales, MagÃ­ster en PolÃ­ticas PÃºblicas (UDP) y Diplomado en AnÃ¡lisis de Datos Avanzado (PUC Chile). Experiencia en importantes consultoras, especializada en traducir datos en informaciÃ³n accionable para clientes pÃºblicos y privados.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== INFO / INSCRIPCIÃN ===== -->
+  <section id="info">
+    <div class="sec-inner">
+      <span class="sec-tag">InscripciÃ³n</span>
+      <h2>InformaciÃ³n General</h2>
+      <p class="sec-lead">Todo lo que necesitas saber para sumarte al Taller DobleA de mayo 2025.</p>
+      <div class="info-grid">
+
+        <div class="info-card">
+          <h3><span class="bar"></span> Detalles del programa</h3>
+          <div class="info-row">
+            <span class="info-key">Costo</span>
+            <span class="info-val">$250.000 CLP / persona</span>
+          </div>
+          <div class="info-row">
+            <span class="info-key">Descuento estudiantes</span>
+            <span class="info-val">SÃ­, pregrado â</span>
+          </div>
+          <div class="info-row">
+            <span class="info-key">Formato</span>
+            <span class="info-val">Presencial u online segÃºn demanda</span>
+          </div>
+          <div class="info-row">
+            <span class="info-key">Conocimientos previos</span>
+            <span class="info-val">Nociones bÃ¡sicas de encuestas y anÃ¡lisis</span>
+          </div>
+          <div class="info-row">
+            <span class="info-key">MÃ³dulo 1</span>
+            <span class="info-val">4 y 5 de mayo Â· 16:00â19:30</span>
+          </div>
+          <div class="info-row">
+            <span class="info-key">MÃ³dulo 2</span>
+            <span class="info-val">11 y 12 de mayo Â· 16:00â19:30</span>
+          </div>
+          <div class="info-row">
+            <span class="info-key">MÃ³dulo 3</span>
+            <span class="info-val">18 y 19 de mayo Â· 16:00â19:30</span>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <h3><span class="bar"></span> Contacto e inscripciÃ³n</h3>
+          <div class="info-row">
+            <span class="info-key">Coordinadora</span>
+            <span class="info-val">MarÃ­a Paz CarreÃ±o</span>
+          </div>
+          <div class="info-row">
+            <span class="info-key">Email</span>
+            <span class="info-val"><a href="mailto:mpaz.carreno@dobleachile.cl">mpaz.carreno@dobleachile.cl</a></span>
+          </div>
+          <div class="info-row">
+            <span class="info-key">TelÃ©fono</span>
+            <span class="info-val"><a href="tel:+56974764663">+56 9 7476 4663</a></span>
+          </div>
+          <div class="info-row">
+            <span class="info-key">Web</span>
+            <span class="info-val"><a href="https://www.dobleachile.cl" target="_blank">www.dobleachile.cl</a></span>
+          </div>
+          <a href="mailto:mpaz.carreno@dobleachile.cl">
+            EscrÃ­benos para inscribirte â
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <div class="footer-logo">
+      <span class="fd">doble</span><span class="fa">AA</span>
+    </div>
+    <p>DobleA Estudios &amp; Estrategia Â· <a href="mailto:mpaz.carreno@dobleachile.cl">mpaz.carreno@dobleachile.cl</a> Â· <a href="https://www.dobleachile.cl" target="_blank">dobleachile.cl</a></p>
+    <p style="margin-top:0.4rem;">Â© 2025 DobleA. Todos los derechos reservados.</p>
+  </footer>
+
+</body>
+</html>
